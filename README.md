@@ -5,6 +5,4 @@ VisuClimat permet de visualiser sur un écran tactile les évolutions environnem
 
 ![screenshot](VisuClimat.jpg)
 
-Actuellement seules les librairies ont été mises en ligne dans lib/
-
-Démo, pour le moment au code source fermé : https://www.sendell.com/VisuClimat.html
+Démo : https://www.sendell.com/VisuClimat/VisuClimat.html
