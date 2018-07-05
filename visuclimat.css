@@ -1,0 +1,88 @@
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *  
+ * VisuClimat : visualisez les changements environnementaux de la Terre
+ * Copyright (c) 2018, Serge Golovanow <serge@sendell.com>
+ * 
+ * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+/* remise à zéro */
+html,body,div,span,h1,h2,h3,h4,h5,h6,p,code,small,strike,strong,sub,sup,b,u,i{border:0;font-size:100%;font:inherit;vertical-align:baseline;margin:0;padding:0;}
+article,aside,details,figcaption,figure,footer,header,hgroup,menu,nav,section{display:block;}  html,body {margin: 0;height:100%;  /*touch-action: none;*/ }
+
+/* éléments principaux */
+body { touch-action: manipulation; background: #222; color: #fff; overflow: hidden;  line-height:1; font:normal 1.5em "Helvetica Neue", Helvetica, Arial, sans-serif; }
+p { margin-bottom: 10px;}
+h1 { font:normal bold 2em/1.8em "Helvetica Neue", Helvetica, Arial, sans-serif;padding:0;text-align: left; }
+a { text-decoration:none; color:#bcf; font-size: inherit; }
+
+/* désactivation de la sélection */
+body { -webkit-touch-callout:none;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none;-webkit-tap-highlight-color: rgba(255, 255, 255, 0);} 
+*::-moz-selection { color: inherit; background: inherit; background-color: inherit;}
+*::selection {color: inherit; background: inherit;} 
+
+/* curseur de souris sablier */
+html.wait * { cursor:progress !important; } 
+/* désactivation globale du pointeur de souris (pour écran tactile) */
+html.tactile * { cursor:none !important; }
+
+/* 
+ * Contenu de la page : images et textes
+ */
+
+#contenu { position: absolute; right:545px;  top:20px; width: 1350px; }
+
+/* texte sous l'image */
+#contenu #texte { transition: all 0.1s linear; text-align: left;}
+#contenu #texte h2#titre { font-size: 125%; font-weight: bold; margin: 5px 0;}
+#contenu #texte #legende { text-align: justify; }
+
+/* image et son slider */
+#cocoen { min-height: 200px; }
+#cocoen #wrapper { z-index:10; }
+#cocoen img { width:1350px; display: block; height: 100%; min-height: 400px; left: 0; position: absolute; top: 0;  }
+#cocoen .cocoen-drag { z-index:20; margin-left: -2px; width: 4px; box-shadow: 0px 0px 3px rgba(0,0,0, 0.75); background-color: rgba(255,255,255,0.75);  }
+#cocoen .cocoen-drag::before { border: 1px solid rgba(0,0,0,0.5); border-radius: 50%; text-align: center; padding-top:24px; color: rgba(0,0,0,0.75); background-color: rgba(255,255,255,0.4); font-size: 80%; content: '◄►'; height: 50px; margin-left: -25px; margin-top: -25px; width: 50px; box-shadow: 0px 0px 8px rgba(0,0,0, 0.75);  white-space: nowrap; overflow: hidden;}
+
+/* dates */
+#cocoen .date {  white-space: nowrap; z-index: 5; box-shadow: 0px 0px 3px rgba(0,0,0,0.8); font-weight: 500; font-size: 100%; padding:18px 10px 0px 10px;  background-color: rgba(0,0,0,0.5); height:38px; position:absolute; top:0; color: #fff; text-shadow: -1px -1px 1px rgba(0,0,0,0.5), 1px 1px 1px rgba(0,0,0,0.5), -1px 1px 1px rgba(0,0,0,0.5), 1px -1px 1px rgba(0,0,0,0.5); }
+#cocoen #avant-date { left:0; border-bottom-right-radius: 8px; }
+#cocoen #apres-date { right:0; border-bottom-left-radius: 8px; }
+
+/* 
+ * liste des images 
+ */
+#liste {  position: absolute; right: 20px; width: 500px; padding:0px; top:10px; height:100%;}
+
+/* theme */
+#liste .theme { border:1px solid #888; background-color:#111; transition: all 0.5s linear; text-align: center; padding:3px 0px 1px 0; margin:10px 0 20px 0; border-radius:6px; }
+#liste .theme.ouvert { border-radius:0px; }
+#liste .theme h3 { padding:18px; font-weight: bold;  letter-spacing: 1px; word-spacing: 5px; cursor: pointer; text-transform: uppercase; }
+#liste .theme.ouvert h3 { cursor: default; color:#fff; }
+
+/* bouton element */
+.theme .btelem { border:1px solid #555; background-color:#333; transition: all 0.5s linear; box-shadow: 0px 0px 4px #000; display: inline-block; white-space: nowrap; overflow: hidden;  width:205px; text-align: center; padding:14px; margin:0px 5px 2px 5px; border-radius: 5px; cursor: pointer; }
+.theme .btelem.actif { background-color:#222; color:#ddd; cursor:default; box-shadow : 0px 0px 4px #FFF;  }
+
+/* info et crédit image */
+#liste #info { line-height: 100%; font-size: 75%; color: #ccc; text-align: left;  }
+#liste #credit {color:#aaa; font-size: 75%; padding-top:5px;  }
+
+/* 
+ * divers
+ */
+.little { font-size: 80%; }
+.shadow-black { text-shadow: -1px 0 rgba(0,0,0,1), 0 1px rgba(0,0,0,1), 1px 0 rgba(0,0,0,1), 0 -1px rgba(0,0,0,1); }
+.shadow-white {text-shadow: -1px 0 rgba(255,255,255,0.75), 0 1px rgba(255,255,255,0.75), 1px 0 rgba(255,255,255,0.75), 0 -1px rgba(255,255,255,0.75);}
+#auteur { font-size: 80%; font-style: italic; opacity:.75; }
+hr { background-color: #888; height: 1px; border: 0; }
+
+/*
+ * Largeur écran <1920px
+ */
+ @media screen and (max-width: 1900px) {
+    /*#cocoen img { max-width}*/
+    body { font-size: 1.2em; }
+    #contenu { right:300px; }
+    #liste { width: 250px;  }
+    #liste .theme h3 { padding:10px 3px; }
+    #liste .theme .btelem { padding:10px; }
+ }

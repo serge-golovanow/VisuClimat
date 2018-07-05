@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+
+<!--  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+ VisuClimat : visualisez les changements environnementaux de la Terre
+ Copyright (c) 2018, Serge Golovanow <serge@sendell.com>
+
+ Inclut les librairies suivantes :
+  jQuery                  Licence MIT     (c) JS Foundation and other contributors  |  http://jquery.org/license
+  jquery.dynamic-url      Licence MIT     Copyrighted 2013 by Toni Almeida, promatik.
+  jquery.touchSwipe       Licence MIT     Copyright (c) 2010-2015 Matt Bryson
+  screenfull.js           Licence MIT     (c) Sindre Sorhus  
+  Cocoen.js               Licence MIT     (c) Koen Romers
+ Voir dans le dossier lib/ la licence afférente à chaque librairie.
+
+ Chrome (ou Chromium) est le navigateur recommandé, c'est taillé pour être affiché en plein écran 1920*1080px
+ 
+ version 2018-07-03
+ 
+-  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -->
+
+    <title>VisuClimat</title>
+    <meta name="description" content="Visualisez les changements environnementaux de la Terre">
+    <meta name="author" content="Serge Golovanow">
+    <meta name="robots" content="noindex">
+    <meta name="viewport" content="width=1920">
+
+    <!--  Librairies tierces  -->
+    <script src="lib/jquery-3.3.1.min.js"></script> <!-- jQuery -->
+    <script src="lib/cocoen.min.js"></script> <!-- Cocoen JS -->
+    <script src="lib/jquery.dynamic-url.min.js"></script> <!-- jQuery dynamic-url -->
+    <script src="lib/jquery.touchSwipe.min.js"></script> <!-- jQuery touchSwipe -->
+    <script src="lib/screenfull.min.js"></script> <!-- screenfull -->
+    
+    <!--  VisuClimat  -->
+    <script src="visuclimat.conf.js"></script> <!-- VisuClimat : configuration -->
+    <script src="visuclimat.js"></script> <!-- VisuClimat : application JS --> 
+
+    <!-- Feuilles de styles CSS -->
+    <link rel="stylesheet" href="lib/cocoen.min.css"> <!-- Cocoen CSS -->
+    <link rel="stylesheet" href="visuclimat.css"> <!-- VisuClimat : styles CSS -->
+
+</head>
+
+<body style="background: #222;">  
+
+    <noscript>
+        <b>JavaScript est indispensable pour faire fonctionner cette application !</b>
+    </noscript>
+
+    <nav>
+        <div id="liste">
+            <!-- La liste des images viendra ici, c'est le boulot de liens() -->
+        </div>
+    </nav>
+
+    <article>
+        <div id="contenu">
+            
+            <div id="cocoen" class="cocoen">    <!-- un div#wrapper va être inséré à l'instanciation de Cocoen pour contenir img#avant et div#avant-date -->
+                <img id="avant" class="cocoimg" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="">
+                <div id="avant-date" class="date date-avant">Avant</div>
+                <img id="apres" class="cocoimg" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="">
+                <div id="apres-date" class="date date-apres">Apres</div>
+            </div>
+
+            
+            <div id="texte">
+                <h2 id="titre">VisuClimat</h2>
+                <aside>
+                    <div id="legende"><span style="color:#888;">Si ceci s'affiche encore, une erreur du code JS de VisuClimat est survenue ! C'est très probablement dans la configuration.</span></div>
+                </aside>
+            </div>
+           
+
+        </div>
+    </article>
+
+</body>
+</html>
