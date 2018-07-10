@@ -8,7 +8,7 @@ const basedir = "img/";
 /** Mode tactile : pointeurs de souris cachés */
 const tactile = false;
 
-/** Image affichée si aucun paramètre n'est fourni */
+/** Image affichée si aucun paramètre n'est fourni (comptée à partir de 0) */
 const pardefaut = 1;
 
 /** Configuration des images */

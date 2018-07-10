@@ -9,15 +9,15 @@
  *   Vous devez avoir reçu une copie de la GNU General Public License en même temps que ce programme (LICENCE.txt) ; si ce n'est pas le cas, consultez <http://www.gnu.org/licenses>.
  *
  * Requiert les librairies suivantes :
- *  jQuery                  Licence MIT     (c) JS Foundation and other contributors  |  http://jquery.org/license
- *  jquery.dynamic-url      Licence MIT     Copyrighted 2013 by Toni Almeida, promatik.
- *  jquery.touchSwipe       Licence MIT     Copyright (c) 2010-2015 Matt Bryson
- *  screenfull.js           Licence MIT     (c) Sindre Sorhus
- *  Cocoen                  Licence MIT     (c) Koen Romers
+ *  jQuery                  Licence MIT     (c) JS Foundation and other contributors        http://jquery.org/license
+ *  jquery.dynamic-url      Licence MIT     Copyrighted 2013 by Toni Almeida, promatik.     https://github.com/promatik/jQuery-Dynamic-URL
+ *  jquery.touchSwipe       Licence MIT     Copyright (c) 2010-2015 Matt Bryson             https://github.com/mattbryson/TouchSwipe-Jquery-Plugin
+ *  screenfull.js           Licence MIT     (c) Sindre Sorhus                               https://github.com/sindresorhus/screenfull.js
+ *  Cocoen                  Licence MIT     (c) Koen Romers                                 https://github.com/koenoe/cocoen
  *
  * Chrome (ou Chromium) est le navigateur recommandé (au moins version 42), Firefox est compatible (au moins version 46).
  *
- * version 2018-07-03
+ * version 2018-07-10
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -151,7 +151,7 @@ jQuery(document).ready(function($){
         } catch(e) { premiere=pardefaut; console.warn("Erreur pour récupérer l'image depuis l'URL : "+e); } // en cas de soucis
 
         // gestion du précédent/suivant :
-        try { // jquery.dynamic-url : https://github.com/promatik/jQuery-Dynamic-URL
+        try { // jquery.dynamic-url
             $.onPopState(function(e) {
                 $.loadURL(); // on récupère la nouvelle URL
                 premiere = $.getVars()['image']; // la paramètre image dans celle-ci
@@ -221,7 +221,7 @@ jQuery(document).ready(function($){
             $('html').removeClass('wait'); // on vire le sablier
 
             // mise à jour de l'URL, Edge va se vautrer pour une page locale (C:\C:\) :
-            try { // jquery.dynamic-url : https://github.com/promatik/jQuery-Dynamic-URL
+            try { // jquery.dynamic-url
                 let param;
                 $.loadURL(); // on récupère l'URL actuelle : on ne la mettra à jour que si nécessaire
                 param = $.getVars()['image']; // la paramètre image dans celle-ci
@@ -330,7 +330,7 @@ jQuery(document).ready(function($){
     }
 
     /** Gère swipe & pinch */
-    function swipes() { // jquery.touchSwipe : https://github.com/mattbryson/TouchSwipe-Jquery-Plugin
+    function swipes() { // jquery.touchSwipe
         $('.cocoen-drag').addClass('noSwipe'); // bouger le slider ne mènera pas à un changement d'image
         $("body").swipe( {
             swipeDown:function(event, direction, distance, duration, fingerCount) {
