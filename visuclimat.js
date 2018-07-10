@@ -1,7 +1,7 @@
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *
  * VisuClimat : visualisez les changements environnementaux de la Terre
  * https://github.com/serge-golovanow/VisuClimat
- * Copyright (c) 2018, Serge Golovanow <serge@sendell.com>
+ * Copyright (c) 2018, Serge Golovanow
  *
  * Publié sous licence libre GNU General Public License 3 :
  *   Ce programme est un logiciel libre ; vous pouvez le redistribuer ou le modifier suivant les termes de la GNU General Public License telle que publiée par la Free Software Foundation ; soit la version 3 de la licence, soit (à votre gré) toute version ultérieure.
