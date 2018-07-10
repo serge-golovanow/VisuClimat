@@ -89,28 +89,28 @@ jQuery(document).ready(function($){
         /** Utilisation de jQuery effects pour un slide progressif */
         drag() {
             if (this.leftPos < this.minLeftPos) {
-            this.leftPos = this.minLeftPos;
+                this.leftPos = this.minLeftPos;
             } else if (this.leftPos > this.maxLeftPos) {
-            this.leftPos = this.maxLeftPos;
+                this.leftPos = this.maxLeftPos;
             }
-            var timing = (this.isDragging ? 0 : 1500); // si on déplace le curseur à la main, on se synchronise bien sûr immédiatement !
+            let timing = (this.isDragging ? 0 : 1500); // si on déplace le curseur à la main, on se synchronise bien sûr immédiatement !
 
             let openRatio = (this.leftPos + (this.dragElementWidth / 2)) - this.elementOffsetLeft;
             openRatio /= this.elementWidth;
             const width = `${openRatio * 100}%`;
 
-            var oldRatio = this.beforeElement.style.width;
+            let oldRatio = this.beforeElement.style.width;
             if (oldRatio == '') oldRatio = '50';
-            var distance = Math.abs(parseFloat(width) - parseFloat(oldRatio))/100;
+            let distance = Math.abs(parseFloat(width) - parseFloat(oldRatio))/100;
             distance += (1-distance)/4; // ralenti les petits distances
             timing *= distance;
 
             $(this.options.dragElementSelector).stop(true).animate({'left':width},timing);
             $("#wrapper").stop(true).animate({'width':width},timing); 
             if (this.options.dragCallback) {
-            this.options.dragCallback(openRatio);
+                this.options.dragCallback(openRatio);
             }
-        }
+        } // fin drag()
     } // fin classe Cocoperso
 
 
@@ -151,7 +151,7 @@ jQuery(document).ready(function($){
         } catch(e) { premiere=pardefaut; console.warn("Erreur pour récupérer l'image depuis l'URL : "+e); } // en cas de soucis
 
         // gestion du précédent/suivant :
-        try {
+        try { // jquery.dynamic-url : https://github.com/promatik/jQuery-Dynamic-URL
             $.onPopState(function(e) {
                 $.loadURL(); // on récupère la nouvelle URL
                 premiere = $.getVars()['image']; // la paramètre image dans celle-ci
@@ -221,7 +221,7 @@ jQuery(document).ready(function($){
             $('html').removeClass('wait'); // on vire le sablier
 
             // mise à jour de l'URL, Edge va se vautrer pour une page locale (C:\C:\) :
-            try {
+            try { // jquery.dynamic-url : https://github.com/promatik/jQuery-Dynamic-URL
                 let param;
                 $.loadURL(); // on récupère l'URL actuelle : on ne la mettra à jour que si nécessaire
                 param = $.getVars()['image']; // la paramètre image dans celle-ci
@@ -300,7 +300,6 @@ jQuery(document).ready(function($){
      * @param {number} delais En combien de temps le slide doit être fait
      */
     function aftheme(themeid,timing=500) {
-        //delais = (delais!==undefined?delais:500);
         if ($('div#theme-'+themeid).length === 1 && !$('div#theme-'+themeid).hasClass("ouvert")) { // si le theme existe et n'est pas ouvert
             //$('div.theme.ouvert div.theme-images').stop(true).slideUp(timing).parent().removeClass('ouvert'); // fermeture des themes visibles, on enleve la class ouvert au <div> parent
             //$('#theme-images-'+themeid).stop(true).slideDown(timing).parent().addClass('ouvert'); // ouverture du theme, on ajoute la class ouvert au <div> parent
@@ -331,7 +330,7 @@ jQuery(document).ready(function($){
     }
 
     /** Gère swipe & pinch */
-    function swipes() {
+    function swipes() { // jquery.touchSwipe : https://github.com/mattbryson/TouchSwipe-Jquery-Plugin
         $('.cocoen-drag').addClass('noSwipe'); // bouger le slider ne mènera pas à un changement d'image
         $("body").swipe( {
             swipeDown:function(event, direction, distance, duration, fingerCount) {
