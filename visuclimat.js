@@ -15,9 +15,9 @@
  *  screenfull.js           Licence MIT     (c) Sindre Sorhus                               https://github.com/sindresorhus/screenfull.js
  *  Cocoen                  Licence MIT     (c) Koen Romers                                 https://github.com/koenoe/cocoen
  *
- * Chrome (ou Chromium) est le navigateur recommandé (au moins version 42), Firefox est compatible (au moins version 46).
+ * Chrome (ou Chromium) est le navigateur recommandé (au moins version 49), Firefox est compatible (au moins version 46).
  *
- * version 2018-07-10
+ * version 2018-07-15
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -54,15 +54,15 @@ jQuery(document).ready(function($){
             if ($("div#cocoen.cocoen").length !== 1) throw new DOMException('Il faut UN élément &lt;div id="cocoen" class="cocoen"&gt; !!');
             if ($("div#cocoen.cocoen>img#avant.cocoimg , div#cocoen.cocoen>img#apres.cocoimg").length !== 2) throw new DOMException('Il faut des images &lt;img id="avant" class="cocoimg"&gt; et &lt;img id="apres" class="cocoimg"&gt; !!');
             try { super.createElements(); } // méthode héritée, crée un div dans #cocoen pour y mettre l'image avant
-            catch(e) { console.error(e); throw new DOMException("Impossible d'initialiser les éléments : "+e); }
+            catch(ex) { console.error(ex); throw new DOMException("Impossible d'initialiser les éléments : "+ex); }
             $(".cocoen>div:first-child").attr('id','wrapper'); // on donne un id #wrapper au div créé
             $("#avant-date").detach().appendTo('#wrapper'); // on y met aussi la date avant
         }
 
         /** pour pouvoir déclencher moi-même un faux clic par trigger (lui-même déclenché par un clic droit) */
-        onDragEnd(e) {
+        onDragEnd(ev) {
             if (this.isDragging) this.isDragging = false; // ça c'est le comportement par défaut
-            else if ($(e.target).hasClass('cocoimg')) super.onTap(e);  // mais moi je veux ça aussi, vu que c'est les mouseup qui déclenchent cette fonction
+            else if ($(ev.target).hasClass('cocoimg')) super.onTap(ev);  // mais moi je veux ça aussi, vu que c'est les mouseup qui déclenchent cette fonction
         }
 
         /** Meilleure définition des listeners, je vais notamment capter les clics droits & co */
@@ -88,11 +88,8 @@ jQuery(document).ready(function($){
 
         /** Utilisation de jQuery effects pour un slide progressif */
         drag() {
-            if (this.leftPos < this.minLeftPos) {
-                this.leftPos = this.minLeftPos;
-            } else if (this.leftPos > this.maxLeftPos) {
-                this.leftPos = this.maxLeftPos;
-            }
+            if (this.leftPos < this.minLeftPos) { this.leftPos = this.minLeftPos; }
+            else if (this.leftPos > this.maxLeftPos) { this.leftPos = this.maxLeftPos; }
             let timing = (this.isDragging ? 0 : 1500); // si on déplace le curseur à la main, on se synchronise bien sûr immédiatement !
 
             let openRatio = (this.leftPos + (this.dragElementWidth / 2)) - this.elementOffsetLeft;
@@ -103,13 +100,11 @@ jQuery(document).ready(function($){
             if (oldRatio == '') oldRatio = '50';
             let distance = Math.abs(parseFloat(width) - parseFloat(oldRatio))/100;
             distance += (1-distance)/4; // ralenti les petits distances
-            timing *= distance;
+            timing *= distance; //si on traverse la moitié de l'image, on mettra la moitié du temps...
 
             $(this.options.dragElementSelector).stop(true).animate({'left':width},timing);
             $("#wrapper").stop(true).animate({'width':width},timing); 
-            if (this.options.dragCallback) {
-                this.options.dragCallback(openRatio);
-            }
+            if (this.options.dragCallback) { this.options.dragCallback(openRatio); }
         } // fin drag()
     } // fin classe Cocoperso
 
@@ -125,7 +120,7 @@ jQuery(document).ready(function($){
     actuelle = init(); // initialisations diverses, notamment ajout de classes CSS
 
     try { cocoen = new Cocoperso(); } // tout est prêt pour gérer les images, instanciation d'un Cocoperso (creation du #wrapper, du slider, ...)
-    catch(e) { $("#titre").html("Erreur à l'initialisation de Cocoen : "+e); throw new Error("Erreur à l'initialisation de Cocoen : "+e) } // crash !
+    catch(ex) { $("#titre").html("Erreur à l'initialisation de Cocoen : "+ex); throw new Error("Erreur à l'initialisation de Cocoen : "+ex) } // crash !
 
     aftheme(index[actuelle][0],0); // affichage du theme correspondant, animation en 0ms
     affiche(actuelle,0); // premier affichage d'une image en 0ms, actuelle a été définie par init()
@@ -148,29 +143,28 @@ jQuery(document).ready(function($){
                 premiere = parseInt(premiere);  // cast vers int
             }
             else premiere = pardefaut; // on se donne pas la peine de prévenir
-        } catch(e) { premiere=pardefaut; console.warn("Erreur pour récupérer l'image depuis l'URL : "+e); } // en cas de soucis
+        } catch(ex) { premiere=pardefaut; console.warn("Erreur pour récupérer l'image depuis l'URL : "+ex); } // en cas de soucis
 
         // gestion du précédent/suivant :
         try { // jquery.dynamic-url
-            $.onPopState(function(e) {
+            $.onPopState(function(ev) {
                 $.loadURL(); // on récupère la nouvelle URL
                 premiere = $.getVars()['image']; // la paramètre image dans celle-ci
                 affiche(premiere);
                 aftheme(index[premiere][0]);
             });
-        } catch(e) { console.warn("Erreur pour gérer précédent/suivant : "+e); }
+        } catch(ex) { console.warn("Erreur pour gérer précédent/suivant : "+ex); }
 
         // on trape les clics droits et du milieu pour en faire des clics classiques :
         try {
-            $(document).bind('contextmenu click', function(e) {
-                if (e.which == 3 || e.which == 2) {
-                    console.log(e);
-                    //e.stopPropagation(); // ?
-                    e.preventDefault();
-                    $(e.target).triggerHandler('click',e);
+            $(document).bind('contextmenu click', function(ev) {
+                if (ev.which == 3 || ev.which == 2) {
+                    //ev.stopPropagation(); // ?
+                    ev.preventDefault();
+                    $(ev.target).triggerHandler('click',ev);
                 }
             });
-        } catch(e) { console.warn("Erreur pour gérer le clic droit/du milieu : "+e); }
+        } catch(ex) { console.warn("Erreur pour gérer le clic droit/du milieu : "+ex); }
 
         window.ondragstart = function() { return false; } // Désactive le drag & drop
 
@@ -182,7 +176,7 @@ jQuery(document).ready(function($){
         if (tactile) { $('html').addClass('tactile'); }
 
         // plein écran au clic sur l'aide
-        //$('#info').click(function(e){ if (screenfull.enabled) {screenfull.request();} });
+        //$('#info').click(function(ev){ if (screenfull.enabled) {screenfull.request();} });
 
         // si Cocoen a déjà été instancié, on le met à jour pour qu'il tienne compte des éventuels changements de CSS :
         if (typeof cocoen !== "undefined") cocoen.dimensions();
@@ -226,7 +220,7 @@ jQuery(document).ready(function($){
                 $.loadURL(); // on récupère l'URL actuelle : on ne la mettra à jour que si nécessaire
                 param = $.getVars()['image']; // la paramètre image dans celle-ci
                 if (param != id) { $.pushVar("image", id, "", true); } // on met à jour l'URL si nécessaire
-            } catch(e) { console.warn("Erreur du pushVar : "+e); } // en cas d'erreur on enchaine
+            } catch(ex) { console.warn("Erreur du pushVar : "+ex); } // en cas d'erreur on enchaine
 
             // il va aussi falloir adapter la hauteur de l'image (de div#cocoen concrètement) :
             var newheight = $(this).get(0).naturalHeight;
@@ -350,12 +344,12 @@ jQuery(document).ready(function($){
     /** Gère la molette de souris pour image suivante/précedente */
     function wheel() {
         //ne pas passer par jQuery pour le {passive: true}
-        document.body.addEventListener("wheel",function(e){
-            if(e.ctrlKey==false && e.deltaY > 0 && actuelle<index.length-1 && Date.now() - scrolllast > delai) { // scroll suivant
+        document.body.addEventListener("wheel",function(ev){
+            if(ev.ctrlKey==false && ev.deltaY > 0 && actuelle<index.length-1 && Date.now() - scrolllast > delai) { // scroll suivant
                 scrolllast = Date.now();
                 avance();
             }
-            if(e.ctrlKey==false && e.deltaY < 1 && actuelle>0 && Date.now() - scrolllast > delai) { // scroll précedent
+            if(ev.ctrlKey==false && ev.deltaY < 1 && actuelle>0 && Date.now() - scrolllast > delai) { // scroll précedent
                 scrolllast = Date.now();
                 recule();
             }
