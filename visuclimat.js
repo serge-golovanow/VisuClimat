@@ -9,7 +9,7 @@
  *   Vous devez avoir reçu une copie de la GNU General Public License en même temps que ce programme (LICENCE.txt) ; si ce n'est pas le cas, consultez <http://www.gnu.org/licenses>.
  *
  * Requiert les librairies suivantes :
- *  jQuery                  Licence MIT     (c) JS Foundation and other contributors        http://jquery.org/license
+ *  jQuery                  Licence MIT     (c) JS Foundation and other contributors        https://jquery.org/license
  *  jquery.dynamic-url      Licence MIT     Copyrighted 2013 by Toni Almeida, promatik.     https://github.com/promatik/jQuery-Dynamic-URL
  *  jquery.touchSwipe       Licence MIT     Copyright (c) 2010-2015 Matt Bryson             https://github.com/mattbryson/TouchSwipe-Jquery-Plugin
  *  screenfull.js           Licence MIT     (c) Sindre Sorhus                               https://github.com/sindresorhus/screenfull.js
