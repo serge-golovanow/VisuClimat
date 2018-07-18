@@ -61,7 +61,7 @@ html.tactile * { cursor:none !important; }
 
 /* bouton element */
 .theme .btelem { border:1px solid #555; background-color:#333; transition: all 0.5s linear; box-shadow: 0px 0px 4px #000; display: inline-block; white-space: nowrap; overflow: hidden;  width:205px; text-align: center; padding:14px; margin:0px 5px 2px 5px; border-radius: 5px; cursor: pointer; }
-.theme .btelem.actif { background-color:#222; color:#ddd; cursor:default; box-shadow : 0px 0px 4px #FFF;  }
+.theme .btelem.actif { background-color:#222; color:#fff; cursor:default; box-shadow : 0px 0px 4px #FFF;  }
 
 /* info et crédit image */
 #liste #info { line-height: 100%; font-size: 75%; color: #ccc; text-align: left;  }
