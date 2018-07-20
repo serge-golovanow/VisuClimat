@@ -144,6 +144,7 @@ jQuery(document).ready(function($){
             }
             else premiere = pardefaut; // on se donne pas la peine de prévenir
         } catch(ex) { premiere=pardefaut; console.warn("Erreur pour récupérer l'image depuis l'URL : "+ex); } // en cas de soucis
+        if (premiere>=index.length) premiere = 0; // en cas de gros soucis
 
         // gestion du précédent/suivant :
         try { // jquery.dynamic-url
@@ -189,6 +190,9 @@ jQuery(document).ready(function($){
      * @param {number} timing En combien de temps afficher l'image
      */
     function affiche(id,timing=500) {
+        if (!RegExp(/^[0-9]+$/).test(id) || id >= index.length) { console.warn("Identifiant d'image à afficher incorrect : "+id); return false; }
+        if (!RegExp(/^[0-9]+$/).test(timing) || timing<0 || timing>10000) { console.warn("Timing d'affichage de l'image incorrect : "+timing); return false; }
+
         let theme,image; //identifiant du theme et de l'image dans le theme
         [theme,image] = index[id]; //récupération du theme et de l'identifiant de cette image dans le theme à partir de l'index
         let elem = elems[theme]['images'][image]; //l'élément courant
@@ -231,7 +235,7 @@ jQuery(document).ready(function($){
             // mise à jour du contenu :
             document.title = 'VisuClimat : '+(elem["lieu"]).replace(/<[^>]+>/g,'') ; // <title> de la page
             $("h2#titre").html(elem["titre"]); // titre
-            $("div#legende").html(elem["legende"]); // legendre
+            $("div#legende").html(elem["legende"]); // légende
             $("div#credit").html('<p>'+elem["credit"]+'</p>'); // crédit
             $('div#avant-date').html(elem['avant-date']); // date avant
             $('div#apres-date').html(elem['apres-date']); // date apres
