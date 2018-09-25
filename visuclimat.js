@@ -15,9 +15,9 @@
  *  screenfull.js           Licence MIT     (c) Sindre Sorhus                               https://github.com/sindresorhus/screenfull.js
  *  Cocoen                  Licence MIT     (c) Koen Romers                                 https://github.com/koenoe/cocoen
  *
- * Chrome (ou Chromium) est le navigateur recommandé (au moins version 49), Firefox est compatible (au moins version 46).
+ * Chrome est le navigateur recommandé (au moins version 49), Firefox est compatible (au moins version 46).
  *
- * version 2018-07-15
+ * version 2018-09-25
  *
  * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
@@ -51,7 +51,7 @@ jQuery(document).ready(function($){
 
         /** Vérifications de base, méthode héritée, puis attribue l'id #wrapper au div créé pour contenir img#avant et #avant-date */
         createElements() {
-            if ($("div#cocoen.cocoen").length !== 1) throw new DOMException('Il faut UN élément &lt;div id="cocoen" class="cocoen"&gt; !!');
+            if ($("div#cocoen.cocoen").length !== 1) throw new DOMException('Il faut UN élément &lt;div id="cocoen" class="cocoen"&gt; !!'); //Cocoen veut .cocoen, Cocoperso veut #cocoen, c'est comme ça.
             if ($("div#cocoen.cocoen>img#avant.cocoimg , div#cocoen.cocoen>img#apres.cocoimg").length !== 2) throw new DOMException('Il faut des images &lt;img id="avant" class="cocoimg"&gt; et &lt;img id="apres" class="cocoimg"&gt; !!');
             try { super.createElements(); } // méthode héritée, crée un div dans #cocoen pour y mettre l'image avant
             catch(ex) { console.error(ex); throw new DOMException("Impossible d'initialiser les éléments : "+ex); }
@@ -82,29 +82,30 @@ jQuery(document).ready(function($){
         dimensions() {
             let ecart = 10; // en pixel, écart minimal au bord de l'image (10 par défaut)
             super.dimensions(); // méthode d'origine
-            this.minLeftPos = this.elementOffsetLeft + ecart;
+            this.minLeftPos = this.elementOffsetLeft + ecart; // on part du bord gauche de l'image dans l'écran
             this.maxLeftPos = (this.elementOffsetLeft + this.elementWidth) - this.dragElementWidth - ecart;
         }
 
         /** Utilisation de jQuery effects pour un slide progressif */
         drag() {
-            if (this.leftPos < this.minLeftPos) { this.leftPos = this.minLeftPos; }
-            else if (this.leftPos > this.maxLeftPos) { this.leftPos = this.maxLeftPos; }
+            if (this.leftPos < this.minLeftPos) { this.leftPos = this.minLeftPos; } // si le curseur est trop à gauche..
+            else if (this.leftPos > this.maxLeftPos) { this.leftPos = this.maxLeftPos; } // ..ou trop à droite, on n'ira pas si loin
+
             let timing = (this.isDragging ? 0 : 1500); // si on déplace le curseur à la main, on se synchronise bien sûr immédiatement !
 
             let openRatio = (this.leftPos + (this.dragElementWidth / 2)) - this.elementOffsetLeft;
             openRatio /= this.elementWidth;
-            const width = `${openRatio * 100}%`;
+            const width = `${openRatio * 100}%`; // de 0% (à gauche) à 100% (à droite)
 
             let oldRatio = this.beforeElement.style.width;
-            if (oldRatio == '') oldRatio = '50';
-            let distance = Math.abs(parseFloat(width) - parseFloat(oldRatio))/100;
+            if (oldRatio == '') oldRatio = '50'; // si on n'a jamais bougé le slider
+            let distance = Math.abs(parseFloat(width) - parseFloat(oldRatio))/100; // de 0 (sur place) à 1 (traversée de l'image)
             distance += (1-distance)/4; // ralenti les petits distances
             timing *= distance; //si on traverse la moitié de l'image, on mettra la moitié du temps...
 
-            $(this.options.dragElementSelector).stop(true).animate({'left':width},timing);
-            $("#wrapper").stop(true).animate({'width':width},timing); 
-            if (this.options.dragCallback) { this.options.dragCallback(openRatio); }
+            $(this.options.dragElementSelector).stop(true).animate({'left':width},timing); //animation du slider
+            $("#wrapper").stop(true).animate({'width':width},timing); // animation de la supperposition d'image
+            if (this.options.dragCallback) { this.options.dragCallback(openRatio); } //compatibilité Cocoen.options.dragCallback(){}
         } // fin drag()
     } // fin classe Cocoperso
 
@@ -272,16 +273,17 @@ jQuery(document).ready(function($){
                 $(document.createElement('div')).addClass('btelem').attr('data-id',compteur).attr('id','btelem-'+compteur).html(image['lieu']).appendTo('#theme-images-'+i); //le <div> de l'image
                 tabindex[compteur++] = [i,j]; // on complète l'index et incrémente le compteur
             }
-
         }
+
         // en bas de #liste :
         $(document.createElement('div')).attr('id','info').html("<p style='cursor:help;'>Choisissez un thème et un lieu, ou "+(tactile ? "balayez verticalement l'écran":"utilisez la molette de souris")+" pour naviguer parmi les "+tabindex.length+" images. &nbsp; Déplacez le curseur vertical ou cliquez sur l'image pour comparer avant/après.</p>").appendTo('#liste');
         $(document.createElement('div')).attr('id','credit').html("").appendTo('#liste');
 
-        // déclencheurs des thèmes et images :
+        // déclencheur des thèmes :
         $("div.theme h3").on('click',function() { // au clic sur le titre d'un thème :
             aftheme( $(this).parent().attr('data-theme-id') ); // c'est le <div> parent qui a le data-theme-id
         });
+        // déclencheur des images :
         $("div.theme div.btelem").on("click",function(){ // au clic sur un bouton image :
             let monid = $(this).attr("data-id"); // l'id de l'image est stocké dans le <div data-id="">
             if (monid != actuelle) { // si ce n'est pas l'image déjà affichée..
@@ -301,15 +303,14 @@ jQuery(document).ready(function($){
         if ($('div#theme-'+themeid).length === 1 && !$('div#theme-'+themeid).hasClass("ouvert")) { // si le theme existe et n'est pas ouvert
             //$('div.theme.ouvert div.theme-images').stop(true).slideUp(timing).parent().removeClass('ouvert'); // fermeture des themes visibles, on enleve la class ouvert au <div> parent
             //$('#theme-images-'+themeid).stop(true).slideDown(timing).parent().addClass('ouvert'); // ouverture du theme, on ajoute la class ouvert au <div> parent
-            $('div.theme.ouvert div.theme-images, div#theme-images-'+themeid).stop(true).slideToggle(timing).parent().toggleClass('ouvert'); // d'un coup
+            $('div.theme.ouvert div.theme-images, div#theme-images-'+themeid).stop(true).slideToggle(timing).parent().toggleClass('ouvert'); // d'un coup  <3
         }
     }//fin function aftheme()
 
     /** Avance d'une image */
     function avance() {
         if (actuelle<index.length-1) { // si on n'est pas à la dernière image
-            actuelle++;
-            aftheme(index[actuelle][0]);
+            aftheme(index[++actuelle][0]);
             affiche(actuelle);
             return true;
         }
@@ -319,8 +320,7 @@ jQuery(document).ready(function($){
     /** Recule d'une image */
     function recule() {
         if (actuelle>0) { // si on n'est pas à la première image
-            actuelle--;
-            aftheme(index[actuelle][0]);
+            aftheme(index[--actuelle][0]);
             affiche(actuelle);
             return true;
         }

@@ -3,24 +3,23 @@
 <head>
     <meta charset="utf-8">
 
-<!--  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
- VisuClimat : visualisez les changements environnementaux de la Terre
- https://github.com/serge-golovanow/VisuClimat
- Copyright (c) 2018, Serge Golovanow
+    <!--  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -
+    VisuClimat : visualisez les changements environnementaux de la Terre
+    https://github.com/serge-golovanow/VisuClimat
+    Copyright (c) 2018, Serge Golovanow
 
- Inclut les librairies suivantes :
-  jQuery                  Licence MIT     (c) JS Foundation and other contributors      https://jquery.org
-  jquery.dynamic-url      Licence MIT     Copyrighted 2013 by Toni Almeida, promatik.   https://github.com/promatik/jQuery-Dynamic-URL
-  jquery.touchSwipe       Licence MIT     Copyright (c) 2010-2015 Matt Bryson           https://github.com/mattbryson/TouchSwipe-Jquery-Plugin
-  screenfull.js           Licence MIT     (c) Sindre Sorhus                             https://github.com/sindresorhus/screenfull.js
-  Cocoen.js               Licence MIT     (c) Koen Romers                               https://github.com/koenoe/cocoen
- Voir dans le dossier lib/ la licence afférente à chaque librairie.
+    Inclut les librairies suivantes :
+    jQuery                  Licence MIT     (c) JS Foundation and other contributors      https://jquery.org
+    jquery.dynamic-url      Licence MIT     Copyrighted 2013 by Toni Almeida, promatik.   https://github.com/promatik/jQuery-Dynamic-URL
+    jquery.touchSwipe       Licence MIT     Copyright (c) 2010-2015 Matt Bryson           https://github.com/mattbryson/TouchSwipe-Jquery-Plugin
+    screenfull.js           Licence MIT     (c) Sindre Sorhus                             https://github.com/sindresorhus/screenfull.js
+    Cocoen.js               Licence MIT     (c) Koen Romers                               https://github.com/koenoe/cocoen
+    Voir dans le dossier lib/ la licence afférente à chaque librairie.
 
- Chrome (ou Chromium) est le navigateur recommandé, c'est taillé pour être affiché en plein écran 1920*1080px
- 
- version 2018-07-10
- 
--  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -->
+    Chrome est le navigateur recommandé, c'est taillé pour être affiché en plein écran 1920*1080px
+    
+    version 2018-09-25
+    -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -  -->
 
     <title>VisuClimat</title>
     <meta name="description" content="Visualisez les changements environnementaux de la Terre">
@@ -60,7 +59,8 @@
     <article>
         <div id="contenu">
             
-            <div id="cocoen" class="cocoen">    <!-- un div#wrapper va être inséré à l'instanciation de Cocoen pour contenir img#avant et div#avant-date -->
+            <div id="cocoen" class="cocoen"> <!-- le data:image est un gif transparent 1*1px codé en base64 -->
+                <!-- un div#wrapper va être inséré à l'instanciation de Cocoen pour contenir img#avant et div#avant-date -->
                 <img id="avant" class="cocoimg" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="">
                 <div id="avant-date" class="date date-avant">Avant</div>
                 <img id="apres" class="cocoimg" src="data:image/gif;base64,R0lGODlhAQABAIAAAP///wAAACH5BAEAAAAALAAAAAABAAEAAAICRAEAOw==" alt="">
