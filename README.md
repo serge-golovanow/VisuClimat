@@ -1,8 +1,8 @@
 # VisuClimat
 
 [![GNU/GPL License](https://img.shields.io/badge/License-GPL-blue.svg)](./LICENCE.txt)
-![Made with JavaScript](https://img.shields.io/badge/Made%20with-JavaScript-red.svg)
-[![Powered by Astropy](http://img.shields.io/badge/Powered%20by-jQuery-orange.svg)](https://jquery.com)
+[![Made with JavaScript](https://img.shields.io/badge/Made%20with-JavaScript-red.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![Powered by jQuery](http://img.shields.io/badge/Powered%20by-jQuery-orange.svg)](https://jquery.com)
 
 **Visualisez les changements environnementaux de la Terre**
 
