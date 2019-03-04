@@ -1,6 +1,6 @@
 # VisuClimat
 
-[![MIT License](https://img.shields.io/badge/License-GPL-blue.svg)](./LICENSE.txt)
+[![GNU/GPL License](https://img.shields.io/badge/License-GPL-blue.svg)](./LICENCE.txt)
 ![Made with JavaScript](https://img.shields.io/badge/Made%20with-JavaScript-red.svg)
 [![Powered by Astropy](http://img.shields.io/badge/Powered%20by-jQuery-orange.svg)](https://jquery.com)
 
